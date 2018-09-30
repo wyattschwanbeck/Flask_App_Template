@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% set active_page = "settings" %}
+
+{% block title %}
+{{ project_name }}
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <table class="table table-striped">
+	<thead><h3>Change Your Email or Password</h3></thead>
+	<tbody>
+		<tr><td><strong>Username:</strong></td> <td>{{ user.username }}</td> <td></td></tr>
+		<tr><td><strong>Email:</strong></td> <td>{{ user.email }}</td> <td></td></tr>
+		<tr><td><strong>Password:</strong></td> <td>********</td> <td><a href="/settings/change_password">Change</a></td></tr>
+	</tbody>
+	</table>
+
+</div> <!-- /container -->
+{% endblock %}

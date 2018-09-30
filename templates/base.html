@@ -1,0 +1,70 @@
+{% extends "bootstrap/base.html" %}
+{% set unauth_navigation_bar = [
+    ('/', 'index', 'Home'),
+    ('/login', 'login', 'Login'),
+    ('/signup', 'signup', 'Sign-up')
+] -%}
+
+{% set auth_navigation_bar = [
+    ('/','index', 'Home'),
+    ('/dashboard', 'dashboard', 'Dashboard'),
+	('/settings', 'settings', 'Settings'),
+    ('/logout', 'logout', 'Logout')
+] -%}
+
+{% set notification_types = [
+	('success', 'Success!'),
+	('info', 'FYI'),
+	('warning', 'Beware!'),
+	('danger', 'Error')
+] -%}
+
+{% set active_page = active_page|default('index') -%}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='starter-template.css')}}">
+{% endblock %}
+
+{% block navbar %}
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+	  <div class="container">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		  </button>
+		  <a class="navbar-brand" href="#">{{ project_name }}</a>
+		</div>
+		<div id="navbar" class="collapse navbar-collapse">
+		  <ul class="nav navbar-nav">
+			{% if user.is_authenticated %}
+				{% for href, id, caption in auth_navigation_bar %}
+				<li{% if id == active_page %} class="active"{% endif %}><a href="{{ url_for(id) }}">{{ caption }}</a>
+				</li>
+				{% endfor %}
+			{% else %}
+				{% for href, id, caption in unauth_navigation_bar %}
+				<li{% if id == active_page %} class="active"{% endif %}><a href="{{ url_for(id) }}">{{ caption }}</a>
+				</li>
+				{% endfor %}
+			{% endif %}
+		  </ul>
+		</div><!--/.nav-collapse -->
+	  </div>
+	</nav>
+	{% if alert is defined %}
+		{% for type, message in notification_types %}
+			{% if alert.type==type %}
+				<div class="alert alert-{{ type }}">
+				<center><strong>{{ message }}</strong> {{ alert.message }}</center>
+				</div>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+			
+{% endblock %}
+{% block content %}
+{% endblock %}
