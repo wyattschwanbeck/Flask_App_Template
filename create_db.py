@@ -8,7 +8,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secretkeythatonlyiknowandyoudontbecauseitssecret'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/Wyatt/Flask/Trivia/finish/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dir/database.db'
 
 db = SQLAlchemy(app)
 
